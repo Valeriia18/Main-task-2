@@ -1,25 +1,22 @@
-package by.epam.pretraining.shyshko.tasks.maintask02.model;
+package by.epam.pretraining.shyshko.tasks.maintask02.model.entity;
 
 import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.LogicException;
 import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.WrongConsumptionException;
 import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.WrongCostException;
-import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.WrongFuelTypeException;
 import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.WrongYearException;
 import java.util.Objects;
 
 /**
  *
  * Base class of vehicle
- * 
+ *
  * version 1.0
- * 
- * @author Paul Shyshko
- * 21.01.2019
+ *
+ * @author Paul Shyshko 21.01.2019
  */
-
 public class Vehicle {
 
-    private String name;
+    private String brand;
     private int year;
     private int cost;
     private FuelType fuelType;
@@ -29,45 +26,35 @@ public class Vehicle {
 
     }
 
-    protected Vehicle(String name, int year, int cost, String fuelType,
+    protected Vehicle(String brand, int year, int cost, FuelType fuelType,
             double fuelConsumption) throws LogicException {
-        this.name = name;
+        this.brand = brand;
         if (year > 0) {
             this.year = year;
-        } else {
-            throw new WrongYearException();
         }
         if (cost > 0) {
             this.cost = cost;
-        } else {
-            throw new WrongCostException();
         }
-        try {
-            this.fuelType = FuelType.valueOf(fuelType.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new WrongFuelTypeException();
-        }
+        this.fuelType = fuelType;
         if (fuelConsumption > 0) {
             this.fuelConsumption = fuelConsumption;
-        } else {
-            throw new WrongConsumptionException();
         }
     }
 
     protected Vehicle(Vehicle other) {
-        this.name = new String(other.name);
+        this.brand = new String(other.brand);
         this.year = other.year;
         this.cost = other.cost;
         this.fuelType = other.fuelType;
         this.fuelConsumption = other.fuelConsumption;
     }
 
-    public String getName() {
-        return name;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public int getYear() {
@@ -98,12 +85,8 @@ public class Vehicle {
         return fuelType;
     }
 
-    public void setFuelType(String fuelType) throws WrongFuelTypeException {
-        try {
-            this.fuelType = FuelType.valueOf(fuelType.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new WrongFuelTypeException();
-        }
+    public void setFuelType(FuelType fuelType) {
+        this.fuelType = fuelType;
     }
 
     public double getFuelConsumption() {
@@ -123,7 +106,7 @@ public class Vehicle {
     public int hashCode() {
         final int PRIME = 47;
         int hash = 7;
-        hash = PRIME * hash + Objects.hashCode(this.name);
+        hash = PRIME * hash + Objects.hashCode(this.brand);
         hash = PRIME * hash + this.year;
         hash = PRIME * hash + this.cost;
         hash = PRIME * hash + Objects.hashCode(this.fuelType);
@@ -146,12 +129,18 @@ public class Vehicle {
         if (this.cost != other.cost) {
             return false;
         }
-        if ((this.fuelType.name()).equals(other.fuelType.name())) {
+        if ((this.fuelType).equals(other.fuelType)) {
             return false;
         }
         if (this.fuelConsumption != other.fuelConsumption) {
             return false;
         }
-        return Objects.equals(this.name, other.name);
+        return Objects.equals(this.brand, other.brand);
+    }
+
+    @Override
+    public String toString() {
+        return brand + ", " + year + ", " + fuelType + ", consumption: "
+                + fuelConsumption + ", costs: " + cost;
     }
 }

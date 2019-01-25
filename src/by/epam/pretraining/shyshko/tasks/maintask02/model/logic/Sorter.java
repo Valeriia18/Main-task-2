@@ -1,14 +1,14 @@
 package by.epam.pretraining.shyshko.tasks.maintask02.model.logic;
 
 import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.NotInitializedStationException;
-import by.epam.pretraining.shyshko.tasks.maintask02.model.TaxiStation;
-import by.epam.pretraining.shyshko.tasks.maintask02.model.Car;
+import by.epam.pretraining.shyshko.tasks.maintask02.model.entity.TaxiStation;
+import by.epam.pretraining.shyshko.tasks.maintask02.model.entity.Vehicle;
 
 /**
  *
- * Sorter needs to sort station cars by significant features of them
+ * Sorter needs to sort station cars by their significant features
  * 
- * version 1.0
+ * version 1.1
  * 
  * @author Paul Shyshko
  * 21.01.2019
@@ -21,15 +21,15 @@ public class Sorter {
         if (taxi == null) {
             throw new NotInitializedStationException();
         }
-        Car[] cars = taxi.getCars();
+        Vehicle[] vehicles = taxi.getVehicles();
         boolean isSorted;
-        for (int i = cars.length - 1; i > 0; i--) {
+        for (int i = vehicles.length - 1; i > 0; i--) {
             isSorted = true;
             for (int j = 0; j < i; j++) {
-                if (cars[j].getYear() > cars[j + 1].getYear()) {
-                    Car tmp = cars[j];
-                    cars[j] = cars[j + 1];
-                    cars[j + 1] = tmp;
+                if (vehicles[j].getYear() > vehicles[j + 1].getYear()) {
+                    Vehicle tmp = vehicles[j];
+                    vehicles[j] = vehicles[j + 1];
+                    vehicles[j + 1] = tmp;
                     isSorted = false;
                 }
             }
@@ -44,15 +44,15 @@ public class Sorter {
         if (taxi == null) {
             throw new NotInitializedStationException();
         }
-        Car[] cars = taxi.getCars();
+        Vehicle[] vehicles = taxi.getVehicles();
         boolean isSorted;
-        for (int i = cars.length - 1; i > 0; i--) {
+        for (int i = vehicles.length - 1; i > 0; i--) {
             isSorted = true;
             for (int j = 0; j < i; j++) {
-                if (cars[j].getFuelConsumption()> cars[j + 1].getFuelConsumption()) {
-                    Car tmp = cars[j];
-                    cars[j] = cars[j + 1];
-                    cars[j + 1] = tmp;
+                if (vehicles[j].getFuelConsumption()> vehicles[j + 1].getFuelConsumption()) {
+                    Vehicle tmp = vehicles[j];
+                    vehicles[j] = vehicles[j + 1];
+                    vehicles[j + 1] = tmp;
                     isSorted = false;
                 }
             }
@@ -67,15 +67,15 @@ public class Sorter {
         if (taxi == null) {
             throw new NotInitializedStationException();
         }
-        Car[] cars = taxi.getCars();
+        Vehicle[] vehicles = taxi.getVehicles();
         boolean isSorted;
-        for (int i = cars.length - 1; i > 0; i--) {
+        for (int i = vehicles.length - 1; i > 0; i--) {
             isSorted = true;
             for (int j = 0; j < i; j++) {
-                if (cars[j].getCost()> cars[j + 1].getCost()) {
-                    Car tmp = cars[j];
-                    cars[j] = cars[j + 1];
-                    cars[j + 1] = tmp;
+                if (vehicles[j].getCost()> vehicles[j + 1].getCost()) {
+                    Vehicle tmp = vehicles[j];
+                    vehicles[j] = vehicles[j + 1];
+                    vehicles[j + 1] = tmp;
                     isSorted = false;
                 }
             }

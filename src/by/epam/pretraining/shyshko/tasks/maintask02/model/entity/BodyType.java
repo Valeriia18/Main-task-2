@@ -1,4 +1,4 @@
-package by.epam.pretraining.shyshko.tasks.maintask02.model;
+package by.epam.pretraining.shyshko.tasks.maintask02.model.entity;
 
 /**
  *

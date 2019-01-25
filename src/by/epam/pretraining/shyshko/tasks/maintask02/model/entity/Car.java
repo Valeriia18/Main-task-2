@@ -1,19 +1,16 @@
-package by.epam.pretraining.shyshko.tasks.maintask02.model;
+package by.epam.pretraining.shyshko.tasks.maintask02.model.entity;
 
 import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.LogicException;
-import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.WrongBodyTypeException;
 import java.util.Objects;
 
 /**
  *
  * Entity of car
- * 
+ *
  * version 1.0
- * 
- * @author Paul Shyshko
- * 21.01.2019
+ *
+ * @author Paul Shyshko 21.01.2019
  */
-
 public class Car extends Vehicle {
 
     private BodyType body;
@@ -22,14 +19,10 @@ public class Car extends Vehicle {
 
     }
 
-    public Car(String name, int year, int cost, String fuelType,
-            double fuelConsumption, String body) throws LogicException {
+    public Car(String name, int year, int cost, FuelType fuelType,
+            double fuelConsumption, BodyType body) throws LogicException {
         super(name, year, cost, fuelType, fuelConsumption);
-        try {
-            this.body = BodyType.valueOf(body.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new WrongBodyTypeException();
-        }
+        this.body = body;
     }
 
     public Car(Car other) {
@@ -41,26 +34,20 @@ public class Car extends Vehicle {
         return body.name();
     }
 
-    public void setBody(String body) throws WrongBodyTypeException {
-        try {
-            this.body = BodyType.valueOf(body.toUpperCase());
-        } catch(IllegalArgumentException e) {
-            throw new WrongBodyTypeException();
-        }
+    public void setBody(BodyType body) {
+        this.body = body;
     }
 
     @Override
     public String toString() {
-        return super.getName() + ", " + body + ", " + super.getYear() + ", "
-                + super.getFuelType() + ", consumption: "
-                + super.getFuelConsumption() + ", costs: " + super.getCost();
+        return super.toString() + ", " + body.name();
     }
 
     @Override
     public int hashCode() {
         final int PRIME = 47;
         int hash = 7;
-        hash = PRIME * hash + Objects.hashCode(super.getName());
+        hash = PRIME * hash + Objects.hashCode(super.getBrand());
         hash = PRIME * hash + super.getYear();
         hash = PRIME * hash + this.getCost();
         hash = PRIME * hash + Objects.hashCode(super.getFuelType().toString());
@@ -90,7 +77,7 @@ public class Car extends Vehicle {
         if (this.getFuelConsumption() != other.getFuelConsumption()) {
             return false;
         }
-        if (!Objects.equals(this.getName(), other.getName())) {
+        if (!Objects.equals(this.getBrand(), other.getBrand())) {
             return false;
         }
         return Objects.equals(this.body, other.body);

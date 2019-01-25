@@ -1,8 +1,8 @@
-package by.epam.pretraining.shyshko.tasks.maintask02.model;
+package by.epam.pretraining.shyshko.tasks.maintask02.model.entity;
 
 /**
  *
- * Some class
+ * Enumeration of fuel types for vehicles
  * 
  * version 1.0
  * 

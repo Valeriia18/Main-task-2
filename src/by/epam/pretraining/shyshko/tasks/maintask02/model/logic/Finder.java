@@ -6,45 +6,44 @@ import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.WrongBodyTypeExce
 import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.WrongCostException;
 import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.WrongNameException;
 import by.epam.pretraining.shyshko.tasks.maintask02.exceptions.WrongYearException;
-import by.epam.pretraining.shyshko.tasks.maintask02.model.BodyType;
-import by.epam.pretraining.shyshko.tasks.maintask02.model.Car;
-import by.epam.pretraining.shyshko.tasks.maintask02.model.TaxiStation;
+import by.epam.pretraining.shyshko.tasks.maintask02.model.entity.BodyType;
+import by.epam.pretraining.shyshko.tasks.maintask02.model.entity.Car;
+import by.epam.pretraining.shyshko.tasks.maintask02.model.entity.TaxiStation;
+import by.epam.pretraining.shyshko.tasks.maintask02.model.entity.Vehicle;
 import java.util.Arrays;
 
 /**
  *
- * Finder class needs to find cars from station using specific parameters
- * 
- * version 1.0
- * 
- * @author Paul Shyshko
- * 21.01.2019
+ * Finder class needs to find vehicles from station using specific parameters
+ *
+ * version 1.1
+ *
+ * @author Paul Shyshko 21.01.2019
  */
-
 public class Finder {
 
-    public static Car[] findCarByName(TaxiStation taxi, String name)
+    public static Vehicle[] findVehicleByBrand(TaxiStation taxi, String brand)
             throws LogicException {
         if (taxi == null) {
             throw new NotInitializedStationException();
         }
-        if (name == "" || name == null) {
+        if (brand.equals("") || brand == null) {
             throw new WrongNameException();
         }
 
-        Car[] result = null;
-        Car[] cars = taxi.getCars();
-        name = name.toUpperCase();
-        for (Car car : cars) {
-            if ((car.getName().toUpperCase()).equals(name)) {
+        Vehicle[] result = new Vehicle[0];
+        Vehicle[] vehicles = taxi.getVehicles();
+        brand = brand.toUpperCase();
+        for (Vehicle veh : vehicles) {
+            if ((veh.getBrand().toUpperCase()).equals(brand)) {
                 result = Arrays.copyOf(result, result.length + 1);
-                result[cars.length - 1] = car;
+                result[result.length - 1] = veh;
             }
         }
         return result;
     }
 
-    public static Car[] findCarByYear(TaxiStation taxi, int year)
+    public static Vehicle[] findVehicleByYear(TaxiStation taxi, int year)
             throws LogicException {
         if (taxi == null) {
             throw new NotInitializedStationException();
@@ -53,32 +52,32 @@ public class Finder {
             throw new WrongYearException();
         }
 
-        Car[] result = null;
-        Car[] cars = taxi.getCars();
-        for (Car car : cars) {
-            if (car.getYear() == year) {
+        Vehicle[] result = new Vehicle[0];
+        Vehicle[] vehicles = taxi.getVehicles();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getYear() == year) {
                 result = Arrays.copyOf(result, result.length + 1);
-                result[cars.length - 1] = car;
+                result[result.length - 1] = vehicle;
             }
         }
         return result;
     }
 
-    public static Car[] findCarByCost(TaxiStation taxi, int cost) 
-            throws LogicException{
+    public static Vehicle[] findVehicleByCost(TaxiStation taxi, int cost)
+            throws LogicException {
         if (taxi == null) {
             throw new NotInitializedStationException();
         }
         if (cost < 0) {
             throw new WrongCostException();
         }
-        
-        Car[] result = null;
-        Car[] cars = taxi.getCars();
-        for (Car car : cars) {
-            if (car.getCost() == cost) {
+
+        Vehicle[] result = new Vehicle[0];
+        Vehicle[] vehicles = taxi.getVehicles();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getCost() == cost) {
                 result = Arrays.copyOf(result, result.length + 1);
-                result[cars.length - 1] = car;
+                result[result.length - 1] = vehicle;
             }
         }
         return result;
@@ -91,17 +90,19 @@ public class Finder {
         }
         try {
             BodyType.valueOf(body);
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new WrongBodyTypeException();
         }
-        
-        Car[] result = null;
-        Car[] cars = taxi.getCars();
+
+        Car[] result = new Car[0];
+        Vehicle[] vehicles = taxi.getVehicles();
         body = body.toUpperCase();
-        for (Car car : cars) {
-            if ((car.getBody()).equals(body)) {
-                result = Arrays.copyOf(result, result.length + 1);
-                result[cars.length - 1] = car;
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getClass() == Car.class) {
+                if ((((Car)vehicle).getBody()).equals(body)) {
+                    result = Arrays.copyOf(result, result.length + 1);
+                    result[result.length - 1] = (Car)vehicle;
+                }
             }
         }
         return result;
